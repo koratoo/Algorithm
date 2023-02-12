@@ -1,0 +1,49 @@
+class Solution {
+    public String[] solution(int n, int[] arr1, int[] arr2) {
+        String[] answer = {};
+        String shap[] = new String[n];
+		String shap2[] = new String[n];
+		
+		for(int i=0; i<n;i++) {
+			shap[i]=Integer.toBinaryString(arr1[i]);
+			while(shap[i].length()!=n) {
+				shap[i]="0"+shap[i];
+			}
+			//System.out.println(shap[i] + " ");
+			shap2[i]=Integer.toBinaryString(arr2[i]);
+			while(shap2[i].length()!=n) {
+				shap2[i]="0"+shap2[i];
+			}
+			//System.out.println(shap2[i] + " ");
+			
+		}
+		
+		for(int i=0; i<n;i++) {
+			shap[i]=shap[i].replaceAll("1","#");
+			shap[i]=shap[i].replaceAll("0", " ");
+			//System.out.println(shap[i]);
+			
+		}
+		for(int i=0; i<n;i++) {
+			shap2[i]=shap2[i].replaceAll("1","#");
+			shap2[i]=shap2[i].replaceAll("0", " ");
+			//System.out.println(shap2[i]);
+		}
+		
+		answer = new String [n];
+		for(int i=0; i<n;i++) {
+			for(int j=0; j<n; j++) {
+				if(shap[i].charAt(j)=='#'||shap2[i].charAt(j)=='#') {
+					answer[i]+='#';
+				}else if(shap[i].charAt(j)==' '&&shap2[i].charAt(j)==' '){
+					answer[i]+=' ';
+				}
+			}
+		}
+		
+		for(int i=0; i<n;i++) {
+			answer[i] = answer[i].replace("null", "");
+		}
+        return answer;
+    }
+}
