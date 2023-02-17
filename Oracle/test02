@@ -1,0 +1,51 @@
+select * from customer_2;
+select * from salesperson;
+
+--모든 판매원의 이름과 급여를 보이시오 단 중복행 제거
+select distinct name, salary from salesperson;
+
+--나이가 30세 미만인 판매원의 이름
+select name from salesperson
+where age<30;
+
+--a로 끝나는 도시에 사는 고객의 이름
+select name from customer_2
+where city like '%a';
+
+--판매원별 주문수
+select salesperson,sum(amount) from order_2
+group by salesperson;
+
+
+--LA에 사는 고객으로 부터 주문을 받은 판매원의 이름과 나이를 보이시오(부속질의 사용)
+select name, age 
+from salesperson
+where name in( select distinct salesperson 
+               from order_2
+               where custname in (select name 
+                                  from customer_2 
+                                  where city = 'LA'))
+;
+
+--LA에 사는 고객으로 부터 주문을 받은 판매원의 이름과 나이를 보이시오(조인을 사용)
+
+select distinct name, age 
+from salesperson
+inner join order_2
+on name in( select distinct salesperson
+            from order_2 od
+            inner join customer_2 cs
+            on od.custname in ( select name 
+                                from customer_2 
+                                where city = 'LA'));
+
+--두번이상 주문을 받은 판매원의 이름을 보이시오
+select salesperson,count(*) from order_2
+where (select count(distinct custname) from order_2)>2
+group by salesperson;
+
+--다니엘의 급여를 4500원으로 변경
+update salesperson set salary =4500 where name = 'daniel';
+
+select * from customer_2;
+select * from order_2;
