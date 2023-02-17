@@ -1,0 +1,10 @@
+--7.프로젝트의 번호와 프로젝트 이름별, 사원 수를 보이시오 단, 두 명이상의 사원이 참여한 프로젝트
+
+select projno,projname,count(em.name)
+from project pj
+inner join employee em
+on pj.deptno in (select em.deptno
+                 from employee )
+                 group by projno,projname
+                 having count(em.name)>2
+                 order by pj.projno,pj.projname;
