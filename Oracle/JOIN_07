@@ -8,3 +8,6 @@ on pj.deptno in (select em.deptno
                  group by projno,projname
                  having count(em.name)>2
                  order by pj.projno,pj.projname;
+
+해설 
+https://blog.naver.com/lears98/223019447330
