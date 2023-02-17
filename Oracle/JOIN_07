@@ -6,7 +6,7 @@ inner join employee em
 on pj.deptno in (select em.deptno
                  from employee )
                  group by projno,projname
-                 having count(em.name)>2
+                 having count(em.name)>=2
                  order by pj.projno,pj.projname;
 
 해설 
