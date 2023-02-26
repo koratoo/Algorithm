@@ -1,0 +1,22 @@
+class Solution {
+    public long solution(int n) {
+       long answer = 0;
+        
+        
+		long narr[] = new long[n+1];
+		
+		narr[0] =0;
+		narr[1] =1;
+		for(int i=2; i<=n;i++) {
+			narr[i]=fibo(i,narr)%1234567;
+		}
+		
+		answer = narr[n];
+        return answer;
+    }
+    
+    
+	public static long fibo(int r, long[] narr) {
+		return narr[r-1]+narr[r-2];
+	}
+}
