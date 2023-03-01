@@ -15,7 +15,6 @@ class Solution {
         return answer;
     }
     
-    //최댓값
     public int isprime(int a){
         int count =0;
         for(int i=2; i<=Math.sqrt(a);i++){
