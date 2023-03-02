@@ -1,0 +1,39 @@
+class Solution {
+    public String solution(String polynomial) {
+        String answer = "";
+        
+        String arr[] = polynomial.split(" ");
+		
+		int countx = 0;
+		int countn = 0;
+		for(int i=0; i<arr.length;i++) {
+			if(arr[i].equals("x")) {
+				arr[i]="1x";
+			}
+			
+			if(arr[i].contains("x")) {
+				arr[i] = arr[i].replace("x", "");
+				countx+= Integer.parseInt(arr[i]);
+			}else if(!arr[i].contains("+") &&!arr[i].contains("x") ) {
+				countn+= Integer.parseInt(arr[i]);
+			}
+		}
+		
+		if(countx!=0 && countn!=0) {
+			if(countx==1) {
+				answer+="x + " + countn;
+			}else {
+			answer+=countx + "x + " + countn;
+			}
+		}else if(countx==0 && countn!=0) {
+			answer+=countn;
+		}else if(countx!=0 && countn==0) {
+			if(countx==1) {
+				answer+="x";
+			}else {
+			answer+=countx + "x";
+			}
+		}
+        return answer;
+    }
+}
