@@ -1,0 +1,57 @@
+
+class Solution {
+    public int[] solution(int[] lottos, int[] win_nums) {
+        int[] answer=new int[2];
+        
+        int countzero=0;
+		int match=0;
+		for(int i=0;i<lottos.length;i++) {
+			if(lottos[i]==0) {
+				countzero++;
+				continue;
+			}
+			for(int j=0; j<lottos.length;j++) {
+				if(lottos[i]==win_nums[j]) {
+					match++;
+				}
+			}
+		}
+		
+		switch (match) {
+		case 6:
+			answer[1] =1;
+			answer[0] =1;
+			break;
+		case 5:
+			answer[1] =2;
+			answer[0] =2-countzero;
+			break;
+		case 4:
+			answer[1] =3;
+			answer[0] =3-countzero;
+			break;
+		case 3:
+			answer[1] =4;
+			answer[0] =4-countzero;
+			break;
+		case 2:
+			answer[1] =5;
+			answer[0] =5-countzero;
+			break;
+		case 1:
+			answer[1] =6;
+			answer[0] =6-countzero;
+			break;
+        case 0:
+            answer[1] =6;
+            if(countzero==6){
+                answer[0]=1;
+            }else {
+			    answer[0] =6-countzero;
+            }
+			break;
+		}
+        
+        return answer;
+    }
+}
