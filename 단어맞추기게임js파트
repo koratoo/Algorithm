@@ -1,0 +1,89 @@
+const wordInput = document.querySelector("#word-input")
+const currentWord = document.querySelector("#current-word")
+const scoreDisplay = document.querySelector("#score")
+const timeDisplay = document.querySelector("#time")
+const messageDisplay = document.querySelector("#message")
+
+const GAME_TIME =20;
+let timeInterval;
+let isReady =false;
+const API_URL = "https://random-word-api.herokuapp.com/word?number=100";
+
+let words=["abc","def","ghi"];
+init();
+
+// function init(){
+//     //서버로부터 값을 받아오기에 promise가 걸리는데 이때 사용하는 것이 then
+//     //인자가 하나일 경우 괄호 생략, 중괄호 생략, return 생략 가능
+//     const res = fetch(API_URL).then(res=> res.json()).then((data)=>words=data);
+// }
+
+//async await 사용
+
+async function init(){
+    //fetch가 실행한 후 값이 담김
+    const res = await fetch(API_URL);
+    const data = await res.json();
+    //한줄인 경우 중괄호 return 제거 가능
+    words = data.filter(item=>{
+        return item.length < 7
+    })
+    isReady=true;
+    alert('단어가 준비됐습니다!');
+}
+
+wordInput.addEventListener("input",e=>{
+    const typedText =e.target.value;
+    const currentText = currentWord.innerText;
+    if( typedText.toUpperCase() === currentText.toUpperCase() && isReady){
+        addScore()
+        setNewWord()
+    }
+})
+
+let score =0;
+function addScore(){
+    score = score+1;
+    scoreDisplay.innerText = score;
+}
+
+
+let isPlaying = false;
+function setNewWord(){
+    time =GAME_TIME;
+
+    wordInput.value="";
+    messageDisplay.innerText ="Now Playing..."
+    
+    currentWord.innerText = words[Math.floor(Math.random()*((words.length)))];
+
+    //인터벌 중복 방지
+    if(!isPlaying){
+        timeInterval = setInterval(countDown,1000)
+        isPlaying=true;
+    }
+}
+
+//카운트 다운
+function countDown(){
+    console.log(time);
+    time=time-1;
+    timeDisplay.innerText=time;
+    if(time===0){
+        gameover();
+    }
+}
+
+//게임종료
+function gameover(){
+    console.log("game over")
+    isPlaying = false;
+    clearInterval(timeInterval)
+    timeInterval = null;
+    messageDisplay.innerText="GAME OVER";
+    score=0;
+}
+
+function levelUp(){
+    alert('난이도를 높이셨습니다.')
+}
