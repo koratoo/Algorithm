@@ -1,0 +1,29 @@
+package zero;
+
+import java.util.Scanner;
+
+public class JavaStudy04 {
+
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		System.out.println("[주민등록번호 계산]");
+		System.out.print("출생년도를 입력해 주세요.(yyyy):");
+		String yyyy = sc.next();
+		System.out.print("출생월을 입력해 주세요.(mm):");
+		int mm = sc.nextInt();
+		System.out.print("출생일을 입력해 주세요.(dd):");
+		int dd = sc.nextInt();
+		System.out.print("성별을 입력해 주세요.(m/f):");
+		String gender = sc.next();
+		
+		System.out.print(yyyy.substring(2, 4)+""+mm+""+dd+"-");
+		if(gender.equals("m")) {
+			System.out.print(3);
+		}else {
+			System.out.print(4);
+		}
+		
+		int RandomJoominNum = (int)(Math.random()*1000000)+1;
+		System.out.print(RandomJoominNum);
+	}
+}
