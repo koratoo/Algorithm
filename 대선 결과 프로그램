@@ -1,0 +1,83 @@
+package zero;
+
+import java.util.Arrays;
+
+public class JavaStudy06 extends Thread{
+
+	static float num1, num2, num3, num4;
+	static String name = "";
+	
+	public static void main(String[] args) {
+	
+		progress();
+		
+		System.out.println("[투표결과] 당선인 : " + pickPerson());
+		
+	}
+
+	public static void progress() {
+
+		for(int i=1; i<=10;i++) {
+			Thread t = new JavaStudy06();
+			t.run();
+			System.out.println("==================================================================");
+			System.out.println("[투표진행율]: "+String.format("%2.2f", (float)i/100)+"%, "+i+"명 투표 => "+name);
+			System.out.println("[기호:1] 이재명 :"+String.format("%2.2f",num1/100)+"%, (투표수 :"+(int)num1 +")");
+			System.out.println("[기호:2] 윤석열 :"+String.format("%2.2f",num2/100)+"%, (투표수 :"+(int)num2 +")");
+			System.out.println("[기호:3] 심상정 :"+String.format("%2.2f",num3/100)+"%, (투표수 :"+(int)num3 +")");
+			System.out.println("[기호:4] 안철수 :"+String.format("%2.2f",num4/100)+"%, (투표수 :"+(int)num4 +")");
+		}
+	}
+	
+	
+	@Override
+	public void run() {
+
+		int chk = pickNum();
+		if(chk==1){
+			num1+=1;
+			name="이재명";
+		}else if(chk==2) {
+			num2+=1;
+			name="윤석열";
+		}else if(chk==3) {
+			num3+=1;
+			name="심상정";
+		}else if(chk==4) {
+			num4+=1;
+			name="안철수";
+		}
+		
+		try {
+			Thread.sleep(1);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+	}
+	
+	public int pickNum() {
+		int num = 0;
+		
+		num = (int) ((Math.random()*4)+1);
+		
+		return num;
+	}
+	
+	public static String pickPerson() {
+		float arr[] = {num1,num2,num3,num4};
+		
+		Arrays.sort(arr);
+		
+		if(arr[2]!=arr[3]) {
+			if(arr[3]==num1) {
+				return "이재명";
+			}else if(arr[3]==num2) {
+				return "윤석렬";
+			}else if(arr[3]==num3) {
+				return "심상정";
+			}
+		}	
+			return "안철수";
+		
+	}
+}
