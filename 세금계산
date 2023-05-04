@@ -2,10 +2,6 @@ package zero;
 
 import java.util.Scanner;
 
-/*
- * 김지성
- * 8번 문제 제출
- */
 public class JavaStudy08 {
 
 	//bd : boundary(경계의 약자)
