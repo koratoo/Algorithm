@@ -1,0 +1,66 @@
+package BeakJoon;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Scanner;
+
+public class _2667_DFS {
+	static int[] dx = {1, 0, -1, 0};
+	static int[] dy = {0,- 1, 0, 1};
+	static int N;
+	static int danzi;
+	static List<Integer> list;
+	public static void main(String[] args) {
+	
+		Scanner sc = new Scanner(System.in);
+		N = sc.nextInt();
+		String graph[] = new String[N];
+		boolean visited[][] = new boolean[N][N];
+		
+		list = new ArrayList<>();
+		
+		for(int i=0;i<N;i++) {
+			graph[i] = sc.next();
+		}
+		
+		int cnt = 0;//총 단지수
+		for(int i=0;i<N;i++) {
+			for(int j=0;j<N;j++) {
+				if(graph[i].charAt(j)=='1' && visited[i][j]==false) {
+					cnt+=dfs(graph,visited,i,j);
+				}
+				if(danzi!=0) {
+					list.add(danzi);
+					danzi=0;
+				}
+			}
+		}
+		
+		System.out.println(cnt);
+		Collections.sort(list);
+		for(int i=0;i<list.size();i++) {
+			System.out.println(list.get(i));
+		}
+		
+	}
+	
+	public static int dfs(String graph[],boolean visited[][],int p,int n) {
+		
+		visited[p][n]=true;
+		danzi++;
+		for(int i=0;i<4;i++) {
+			int nx = p+dx[i];
+			int ny = n+dy[i];
+			if(nx<0 || ny<0 || nx>N-1 || ny >N-1)continue;
+			if(visited[nx][ny]) continue;
+			if(graph[nx].charAt(ny)=='1') {
+			  dfs(graph,visited,nx,ny);	
+			  
+			}
+		}
+		
+		return 1;
+	}
+
+}
