@@ -1,0 +1,96 @@
+package BeakJoon;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
+
+public class Heap24174 {
+
+	static int count = 0;
+	static int stepCheck;
+	static int N;
+	static void heapArrange(List<Integer> arr) {
+		StringBuilder sb = new StringBuilder();
+		int n = arr.size()-1;
+		min_heap(arr,n);
+		for(int i=n;i>1;i--) {
+			
+			int tmp = arr.get(1);
+			arr.set(1, arr.get(i));
+			arr.set(i, tmp);
+			count++;
+			if(count == stepCheck) {
+				for(int j=1;j<=N;j++) {
+					sb.append(arr.get(j)).append(" ");
+				} 
+				System.out.println(sb.toString());
+				return;
+			}
+			
+			heapify(arr,1,i-1);
+		}
+	}
+	
+	public static void heapify(List<Integer> arr, int target, int size) {
+		StringBuilder sb = new StringBuilder();
+		int left = 2 * target;
+		int right = 2 * target +1;
+		int minheap = 0;
+		if(right <=size) {
+			if(arr.get(left) < arr.get(right)) {
+				minheap=left;
+			}else {
+				minheap=right;
+			}
+		}else if(left<=size) {
+			minheap = left;
+		}else {
+			return;
+		}
+		
+		if(arr.get(minheap)<arr.get(target)) {
+			int tmp = arr.get(target);
+			arr.set(target, arr.get(minheap));
+			arr.set(minheap, tmp);
+			
+			count++;
+			if(count==stepCheck) {
+				for(int j=1;j<=N;j++) {
+					sb.append(arr.get(j)).append(" ");
+				} 
+				System.out.println(sb.toString());
+				return;
+			}
+			heapify(arr,minheap,size);
+		}
+	}
+
+	public static void min_heap(List<Integer> arr, int size) {
+		for(int i=size/2; i>0 ;i--) {
+			heapify(arr,i,size);
+		}
+	}
+
+	public static void main(String[] args) throws NumberFormatException, IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		
+
+		String[] Nstep = (br.readLine()).split(" ");
+		N = Integer.parseInt(Nstep[0]);
+		stepCheck = Integer.parseInt(Nstep[1]);
+		List<Integer> arr = new ArrayList<>();
+		arr.add(0);//0번 인덱스는 사용 안함
+		String[] inputLine = br.readLine().split(" ");
+        for(int i=0;i<N;i++) {
+            arr.add(Integer.parseInt(inputLine[i]));
+        }
+		heapArrange(arr);
+		if(count<stepCheck) {
+			System.out.println(-1); 
+			
+		}
+		
+	}
+}
