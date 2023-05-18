@@ -1,0 +1,60 @@
+package zero;
+import java.util.*;
+
+public class BFS_FindShortestPath {
+
+	
+	 	static int[] dx = {1, 0, -1, 0};
+	    static int[] dy = {0, -1, 0, 1};
+	    static int n, m;
+	    static boolean[][] visited;
+	    static int count =0;
+	    static int nx,ny;
+	
+	   public static void main(String[] args) {
+		
+		   int maps[][] = {{1,0,1,1,1},{1,0,1,0,1},{1,0,1,1,1},{1,1,1,0,1},{0,0,0,0,1}};
+	  
+	        n = maps.length;
+	        m = maps[0].length;
+	        visited = new boolean[n][m];
+
+	        int answer = bfs(0,0,maps);
+
+	        System.out.println(answer);
+	    }
+	    public static int bfs(int nx, int ny, int[][] maps) {
+	        Queue<int[]> queue = new LinkedList<>();
+	        queue.offer(new int[]{nx, ny}); // x, y, count
+	        
+	        while (!queue.isEmpty()) {
+	            int[] curr = queue.poll();
+	            int currX = curr[0];
+	            int currY = curr[1];
+	          
+
+	            if (currX == n - 1 && currY == m - 1) {
+	                return count;
+	            }
+
+	            for (int i = 0; i < 4; i++) {
+	                nx = currX + dx[i];
+	                ny = currY + dy[i];
+	                if (nx >= 0 && ny >= 0 && nx < n && ny < m && visited[nx][ny] && maps[nx][ny]==1 ) {
+	                	System.out.println("currX : " + currX);
+	 	                System.out.println("currY : " + currY);
+	 	                System.out.println("----------------");
+	                    
+	                    visited[nx][ny] = true;
+	                    queue.offer(new int[]{nx, ny});
+	                    count++;
+	                }
+	            }
+	            System.out.println("count : " + count);
+	        }
+
+	        return count;
+	    }
+	
+
+}
