@@ -1,0 +1,103 @@
+package baekjoon;
+
+import java.util.LinkedList;
+import java.util.PriorityQueue;
+import java.util.Queue;
+import java.util.Scanner;
+
+public class _1744수를묶어서최대값만들기 {
+
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		int n = sc.nextInt();
+		int sum = 0;
+		
+		PriorityQueue<Integer> pq = new PriorityQueue<>();
+		PriorityQueue<Integer> pqm = new PriorityQueue<>();//음수 처리
+		Queue<Integer> zero = new LinkedList<>();
+		
+		try {
+			
+		
+		//음수, 0 , 양수를 분리하여 배열에 넣음
+		for(int i=0; i<n;i++) {
+			int a = sc.nextInt();
+			if(a<0) {
+				pqm.add(a);
+			}else if(a==0) {
+				zero.add(a);
+			}else if(a>0) {
+				pq.add(a);
+			}
+		}
+		
+		if(!pqm.isEmpty()) {
+			//음수 처리 - 홀수
+			if(pqm.size()%2==1) {
+				
+				while(pqm.size()!=1) {
+					int a = pqm.poll();
+					int b = pqm.poll();
+					sum+=a*b;
+				}
+				//pqm에는 음수 값 하나만 남음
+			}else if(pqm.size()%2==0) {//음수 처리 - 짝수
+				while(pqm.size()!=0) {
+					int a = pqm.poll();
+					int b = pqm.poll();
+					sum+=a*b;
+				}
+			}
+		
+			//0 처리
+			if(!pqm.isEmpty() && !zero.isEmpty()) {
+				//음수 값 1개, 0 이 존재하는 경우
+				pqm.poll();
+				zero.poll();
+			}else if(pqm.isEmpty() && !zero.isEmpty()) {
+				//음수가 존재하지 않고 , 0 이 존재하는 경우
+				//아무 동작도 하지 않음
+			}else if(!pqm.isEmpty() && zero.isEmpty()) {
+				//음수 값 1개, 0 x
+				sum+=pqm.poll();
+			}
+		}
+		
+		if(!pq.isEmpty()) {
+			//1 처리
+			while(pq.peek()==1) {
+				sum+=pq.poll();
+			}
+			
+			if(!pq.isEmpty()) {
+			
+				if(pq.size()%2==1 && pq.size()!=1) {//홀수 개
+					sum+=pq.poll();
+					while(pq.size()!=0) {
+						int a = pq.poll();
+						int b = pq.poll();
+						sum+=a*b;
+					}
+					
+				}else if(pq.size()%2==0) {
+					while(!pq.isEmpty()) {
+						int a = pq.poll();
+						int b = pq.poll();
+						sum+=a*b;
+					}
+				}
+				if(pq.size()==1) {
+					sum+=pq.peek();
+				}
+			}
+		}
+		System.out.println(sum);
+		
+		} catch (Exception e) {
+			System.out.println(sum);
+		}
+	
+		
+		
+	}
+}
