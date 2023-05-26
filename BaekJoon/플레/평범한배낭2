@@ -1,0 +1,52 @@
+package BeakJoon;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+public class _12920 {
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int N = sc.nextInt(); // 물건 종류의 개수
+        int maxWeight = sc.nextInt(); // 들 수 있는 최대 무게
+
+        List<Minho> list = new ArrayList<>();
+
+        // 물건의 개수를 없애서 무게와 만족도만 남깁니다.
+        for (int i = 0; i < N; i++) {
+            int weight = sc.nextInt();
+            int content = sc.nextInt();
+            int nums = sc.nextInt();
+
+            for (int j = 1; j <= nums; j *= 2) {
+                list.add(new Minho(weight * j, content * j));
+                nums -= j;
+            }
+
+            if (nums > 0) {
+                list.add(new Minho(weight * nums, content * nums));
+            }
+        }
+
+        int[] dp = new int[maxWeight + 1];
+        for (int i = 0; i < list.size(); i++) {
+            int weight = list.get(i).weight;
+            int content = list.get(i).content;
+            for (int j = maxWeight; j >= weight; j--) {
+                dp[j] = Math.max(dp[j - weight] + content, dp[j]);
+            }
+        }
+
+        System.out.println(dp[maxWeight]);
+    }
+
+    static class Minho {
+        int weight, content;
+
+        Minho(int weight, int content) {
+            this.weight = weight;
+            this.content = content;
+        }
+    }
+}
