@@ -1,0 +1,42 @@
+package BaekJoon2;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+public class _평범한배낭 {
+
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		int N = sc.nextInt();
+		int K = sc.nextInt();
+		
+		List<Node> list = new ArrayList<>();
+		for(int i=0;i<N;i++) {
+			int w = sc.nextInt();
+			int v = sc.nextInt();
+			list.add(new Node(w,v));
+		}
+		
+		int[] dp = new int[100001];
+		for(int i=0;i<list.size();i++) {
+			
+			int w = list.get(i).w;
+			int v = list.get(i).v;
+			
+			for(int j=K; j>=w;j--) {
+				dp[j] = Math.max(dp[j-w]+v, dp[j]);
+			}
+		}
+		System.out.println(dp[K]);
+	}
+	
+	public static class Node{
+		int w;
+		int v;
+		public Node(int w, int v) {
+			this.w = w;
+			this.v = v;
+		}
+	}
+}
