@@ -1,0 +1,44 @@
+
+public class Pager {
+
+	private long totalcount;
+	Pager(long totalcount){
+		this.totalcount = totalcount;
+	}
+    public String html(long pageIndex) {
+        StringBuilder htmlBuilder = new StringBuilder();
+        
+        long block = pageIndex/10;
+        long start = block * 10 +1;
+		long end = (block+1) * 10;
+		long realEnd = (int)Math.ceil(totalcount/10);
+        
+
+        htmlBuilder.append("<a href='#'>[처음]</a>\n");
+        htmlBuilder.append("<a href='#'>[이전]</a>\n");
+
+        long EndPoint = end>realEnd ? realEnd : end;
+        
+        for (long i = start; i <= EndPoint; i++) {
+            if (i == pageIndex) {
+                htmlBuilder.append("<a href='#' class='on'>").append(i).append("</a>\n");
+            } else {
+                htmlBuilder.append("<a href='#'>").append(i).append("</a>\n");
+            }
+        }
+
+        htmlBuilder.append("<a href='#'>[다음]</a>\n");
+        htmlBuilder.append("<a href='#'>[마지막]</a>\n");
+
+        return htmlBuilder.toString();
+    }
+    
+    public static void main(String[] args) {
+		
+    	long pageIndex = 15;
+    	long totalCount = 265;
+		Pager pager = new Pager(totalCount);
+		System.out.println(pager.html(pageIndex));
+		
+	}
+}
