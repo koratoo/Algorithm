@@ -1,0 +1,33 @@
+
+public class Practice1 {
+    public static int solution(int[] appleTrees, int a, int b) {
+
+        int sum = 0;
+        int cnt = 0;
+        boolean A = false;
+        for(int i=0;i<appleTrees.length;i++){
+            if(appleTrees[i]%b==0){
+                sum+=appleTrees[i];
+            }else if(A==false && appleTrees[i]%b!=0){
+                sum+=appleTrees[i];
+                sum-=a;
+                cnt++;
+                A=true;
+            }else{
+                sum+=appleTrees[i];
+            }
+        }
+        cnt = sum/b;
+        return cnt;
+    }
+
+    public static void main(String[] args) {
+        // Test code
+        int[] appleTrees = new int[] {1, 2, 3};
+        System.out.println(solution(appleTrees, 1, 1));
+
+        System.out.println();
+        appleTrees = new int[]{10, 10, 20, 20, 30, 30};
+        System.out.println(solution(appleTrees, 5, 3));
+    }
+}
