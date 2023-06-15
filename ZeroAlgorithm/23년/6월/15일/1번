@@ -1,0 +1,30 @@
+
+import java.util.*;
+class Solution {
+    public int[] solution(int[] a, int[] b) {
+        int length = Math.max(a.length, b.length);
+        int[] result = new int[length];
+
+        int carry = 0;
+        for (int i = length - 1; i >= 0; i--) {
+            int sum = carry;
+            if (i >= length - a.length) {
+                sum += a[i - (length - a.length)];
+            }
+            if (i >= length - b.length) {
+                sum += b[i - (length - b.length)];
+            }
+
+            result[i] = sum % 10;
+            carry = sum / 10;
+        }
+
+        if (carry > 0) {
+            result = Arrays.copyOf(result, length + 1);
+            System.arraycopy(result, 0, result, 1, length);
+            result[0] = carry;
+        }
+
+        return result;
+    }
+}
