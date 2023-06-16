@@ -1,0 +1,93 @@
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Queue;
+import java.util.Scanner;
+
+public class Main {
+    static int[][] graph;
+    static boolean[][] visited;
+    static List<Point> startPoints;
+    static int[] dx = {1, 0, -1, 0};
+    static int[] dy = {0, -1, 0, 1};
+    static int day, N, M;
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        M = sc.nextInt();
+        N = sc.nextInt();
+        graph = new int[N][M];
+        visited = new boolean[N][M];
+        startPoints = new ArrayList<>();
+
+        for (int i = 0; i < N; i++) {
+            for (int j = 0; j < M; j++) {
+                graph[i][j] = sc.nextInt();
+                if (graph[i][j] == 1) {
+                    startPoints.add(new Point(i, j));
+                }
+            }
+        }
+
+        bfs();
+
+        if (checkAllTomatoes()) {
+            System.out.println(-1);
+        } else {
+            System.out.println(day);
+        }
+    }
+
+    private static void bfs() {
+        Queue<Point> queue = new LinkedList<>();
+
+        for (Point startPoint : startPoints) {
+            int x = startPoint.x;
+            int y = startPoint.y;
+            queue.add(new Point(x, y));
+            visited[x][y] = true;
+        }
+
+        while (!queue.isEmpty()) {
+            Point p = queue.poll();
+            int px = p.x;
+            int py = p.y;
+
+            for (int i = 0; i < 4; i++) {
+                int nx = px + dx[i];
+                int ny = py + dy[i];
+
+                if (nx < 0 || ny < 0 || nx >= N || ny >= M || visited[nx][ny])
+                    continue;
+
+                if (graph[nx][ny] == -1)
+                    continue;
+
+                graph[nx][ny] = graph[px][py] + 1;
+                queue.add(new Point(nx, ny));
+                visited[nx][ny] = true;
+                day = graph[nx][ny] - 1;
+            }
+        }
+    }
+
+    private static boolean checkAllTomatoes() {
+        for (int i = 0; i < N; i++) {
+            for (int j = 0; j < M; j++) {
+                if (graph[i][j] == 0)
+                    return true;
+            }
+        }
+        return false;
+    }
+}
+
+class Point {
+    int x;
+    int y;
+
+    Point(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
+}
