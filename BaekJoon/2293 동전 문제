@@ -1,0 +1,27 @@
+import java.util.Scanner;
+
+public class _동전_2293 {
+
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		int n = sc.nextInt();
+		int k = sc.nextInt();
+		int[] coins = new int[101];//1~100까지 사용예정
+		int[] dp = new int[10001];
+
+		for(int i=1;i<=n;i++) {
+			coins[i]=sc.nextInt();
+		}
+		
+		
+		dp[0]=1;
+		for(int i=1;i<=n;i++) {
+			for(int j=coins[i];j<=k;j++) {
+				dp[j] += dp[j-coins[i]];
+			}
+		}
+		System.out.println(dp[k]);
+		
+		
+	}
+}
