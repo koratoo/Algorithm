@@ -1,0 +1,29 @@
+import java.util.Arrays;
+
+class Solution {
+    public int solution(int k, int[] tangerine) {
+        Arrays.sort(tangerine);
+
+        int max = tangerine[tangerine.length - 1];
+        int[] box = new int[max + 1];
+
+        for (int t : tangerine) {
+            box[t]++;
+        }
+
+        Arrays.sort(box);
+
+        int answer = 0;
+        for (int i = box.length - 1; i >= 0; i--) {
+            k -= box[i];
+            if (k <= 0) {
+                answer++;
+                break;
+            } else {
+                answer++;
+            }
+        }
+
+        return answer;
+    }
+}
