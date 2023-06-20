@@ -1,0 +1,39 @@
+<script>
+$(document).ready(function() {
+	  $("#get-location-button").click(function() {
+	    if (navigator.geolocation) {
+	      navigator.geolocation.getCurrentPosition(showPosition);
+	    } else {
+	      alert("이 브라우저는 위치 정보를 지원하지 않습니다.");
+	    }
+	  });
+
+	  function showPosition(position) {
+	    const latitude = position.coords.latitude;
+	    const longitude = position.coords.longitude;
+
+	    $("#lat").val(latitude);
+	    $("#lnt").val(longitude);
+	    
+	    // Form submission
+	    $("#location-form").submit();
+	  }
+	});
+	
+	
+</script>
+
+<h2>와이파이 정보 구하기</h2>
+<h4>
+  <span><a href="#">홈</a> | </span>
+  <span><a href="history.jsp">위치 히스토리 목록</a> | </span>
+  <span><a href="">Open API 와이파이 정보가져오기</a> </span>
+</h4>
+<form id="location-form" action="GetMyLocation.do" method="post">
+	
+    LAT: <input type="text" id="lat" name="lat" />, LNT: <input type="text" id="lnt" name="lnt" />
+    <input type="button" value="내 위치 가져오기" id="get-location-button" />
+	
+
+    <input type="submit" value="주변 와이파이 정보 불러오기" id="submit-location" />
+</form>
